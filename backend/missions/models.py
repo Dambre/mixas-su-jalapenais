@@ -6,10 +6,12 @@ from users.models import BaseModel, User
 class Mission(BaseModel):
     title = models.CharField(max_length=50)
     description = models.TextField(max_length=500)
-    creator = models.ForeignKey(User, on_delete=models.CASCADE)
-    amount = models.PositiveIntegerField(default=0)
-    specialist = models.ForeignKey(User, on_delete=models.CASCADE)
-    specialist_approved = models.BooleanField(default=False)
+    creator = models.ForeignKey(User, on_delete=models.CASCADE, related_name='created_missions', null=True)
+    worker = models.ForeignKey(User, on_delete=models.CASCADE, related_name='proposed_missions', null=True)
+    amount = models.PositiveIntegerField(default=0, null=True)
+    worker_approved = models.BooleanField(default=False, null=True)
+    finished_by_worker = models.BooleanField(default=False, null=True)
+    finished_by_customer = models.BooleanField(default=False, null=True)
 
     def as_dict(self):
         return {
@@ -37,4 +39,3 @@ class Bid(BaseModel):
             'worker': self.worker.as_dict(),
             'mission': self.mission.as_dict(),
         }
-
