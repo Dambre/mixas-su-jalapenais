@@ -14,6 +14,13 @@ class BaseModel(models.Model):
         abstract = True
 
 
+USER_TYPES = (
+    ('customer', 'Customer'),
+    ('worker', 'Worker'),
+)
+
+
 class User(BaseModel):
     user = AutoOneToOneField(AuthUser, on_delete=models.CASCADE)
     email = models.EmailField(null=True, blank=True)
+    userType = models.CharField(choices=USER_TYPES, max_length=20, default='Customer')

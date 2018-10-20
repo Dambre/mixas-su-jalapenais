@@ -1,14 +1,8 @@
+from django.http import JsonResponse
 
-from rest_framework import generics
-
-from .serializers import UserSerializer
 from .models import User
 
 
-class UserViewSet(generics.ListCreateAPIView):
-    queryset = User.objects.all()
-    serializer_class = UserSerializer
-
-
-    def create(request, *args, **kwargs):
-        import ipdb; ipdb.set_trace()
+def list_users(request):
+    users = User.objects.values('uuid', 'email', 'createdAt', 'updatedAt', 'userType')
+    return JsonResponse(list(users), safe=False)
