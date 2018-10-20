@@ -9,6 +9,17 @@ class Mission(BaseModel):
     creator = models.ForeignKey(User, on_delete=models.CASCADE)
     amount = models.PositiveIntegerField(default=0)
 
+    def as_dict(self):
+        return {
+            'uuid': self.uuid,
+            'createdAt': self.createdAt,
+            'updatedAt': self.updatedAt,
+            'title': self.title,
+            'description': self.description,
+            'amount': self.amount,
+            'creator': self.creator.as_dict(),
+        }
+
 
 class Bids(BaseModel):
     worker = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -23,5 +34,4 @@ class Bids(BaseModel):
             'amount': self.amount,
             'worker': self.worker.as_dict(),
             'mission': self.mission.as_dict(),
-
         }
