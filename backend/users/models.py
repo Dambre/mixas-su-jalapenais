@@ -23,4 +23,6 @@ USER_TYPES = (
 class User(BaseModel):
     user = AutoOneToOneField(AuthUser, on_delete=models.CASCADE)
     email = models.EmailField(null=True, blank=True)
+    firstName = models.CharField(max_length=50, null=True, blank=True)
+    lastName = models.CharField(max_length=50, null=True, blank=True)
     userType = models.CharField(choices=USER_TYPES, max_length=20, default='Customer')
