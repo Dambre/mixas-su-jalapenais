@@ -1,10 +1,7 @@
-from django.shortcuts import render
 from django.http import JsonResponse
-from django.core import serializers
-from django.forms.models import model_to_dict
 
 from .models import Mission, Bid
-
+from users.models import User
 
 
 def all_missions(request):
@@ -15,23 +12,41 @@ def all_missions(request):
 
 # customer calls
 def create_mission(request):
-    # TODO: post create mission
-    pass
+    data = request.POST
+    mission = Mission.objects.create(creator_id=request.user_id, **data)
+    return JsonResponse(mission.as_dict())
+
 
 def get_mission(request, id):
-    _mission = Mission.objects.get(pk=id)
-    _mission = _mission.as_dict()
+    mission = Mission.objects.get(pk=id)
+    mission = mission.as_dict()
+    bids = []
+    for bid in Bid.objects.filter(mission_id=mission['uuid']):
+        bids.append(bid.as_dict())
 
-    # append workers bids
-    return JsonResponse(_mission, safe=False)
+    mission.update({'bids': bids})
+    return JsonResponse(bids)
 
 
 def select_worker(request, id):
-    pass
+    data = request.POST
+    mission = Mission.objects.get(pk=id)
+    mission.worker_id = data.get('worker')
+    mission.save()
+    return JsonResponse({'success': True})
 
 
-def finish_mission(request):
-    pass
+def finish_mission(request, id):
+    mission = Mission.objects.get(pk=id)
+    user_type = User.objects.get(user=request.user).userType
+    if user_type == 'customer':
+        mission.finished_by_customer = True
+
+    elif user_type == 'worker':
+        mission.finished_by_worker = True
+
+    mission.save()
+    return JsonResponse({'success': True})
 
 
 # //////////////////////////////////////////////////////
@@ -42,8 +57,4 @@ def proposed_missions():
 
 
 def accept_mission():
-    pass
-
-
-def finish_mission():
     pass

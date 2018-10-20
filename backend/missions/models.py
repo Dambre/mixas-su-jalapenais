@@ -8,8 +8,10 @@ class Mission(BaseModel):
     description = models.TextField(max_length=500)
     creator = models.ForeignKey(User, on_delete=models.CASCADE)
     amount = models.PositiveIntegerField(default=0)
-    specialist = models.ForeignKey(User, )
-    specialist_approved = models.BooleanField(default=False)
+    worker = models.ForeignKey(User, )
+    worker_approved = models.BooleanField(default=False)
+    finished_by_worker = models.BooleanField(default=False)
+    finished_by_customer = models.BooleanField(default=False)
 
     def as_dict(self):
         return {
@@ -37,4 +39,3 @@ class Bid(BaseModel):
             'worker': self.worker.as_dict(),
             'mission': self.mission.as_dict(),
         }
-
