@@ -8,7 +8,7 @@ class Mission(BaseModel):
     description = models.TextField(max_length=500)
     creator = models.ForeignKey(User, on_delete=models.CASCADE)
     amount = models.PositiveIntegerField(default=0)
-    specialist = models.ForeignKey(User, )
+    specialist = models.ForeignKey(User, on_delete=models.CASCADE)
     specialist_approved = models.BooleanField(default=False)
 
     def as_dict(self):

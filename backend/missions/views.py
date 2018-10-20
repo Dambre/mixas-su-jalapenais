@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import get_object_or_404
 from django.http import JsonResponse
 from django.core import serializers
 from django.forms.models import model_to_dict
@@ -37,13 +37,24 @@ def finish_mission(request):
 # //////////////////////////////////////////////////////
 # worker calls
 
-def proposed_missions():
-    pass
+def proposed_missions(request, id):
+    _missions = []
+    for mission in Mission.objects.get.filter(specialist=request.User):
+        _missions.append(mission.as_dict())
+    return JsonResponse(_missions, safe=False)
 
 
-def accept_mission():
-    pass
+def accept_mission(request, id):
+    _mission = get_object_or_404(Mission, pk=id)
+    _mission.specialist_approved = True
+    _mission.save()
+    
+    return get_mission(request, id)
 
 
-def finish_mission():
-    pass
+def finish_mission(request, id):
+    _mission = get_object_or_404(Mission, pk=id)
+    _mission. aproved by worker = True #TODO: WRITE THIS RIGHT
+    _mission.save()
+
+    return get_mission(request, id)
