@@ -6,8 +6,8 @@ from django.contrib.auth.models import User as AuthUser
 
 class BaseModel(models.Model):
     uuid = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    createdAt = models.DatetimeField(auto_now_add=True)
-    updatedAt = models.EmailField(auto_now=True)
+    createdAt = models.DateTimeField(auto_now_add=True)
+    updatedAt = models.DateTimeField(auto_now=True)
 
     class Meta:
         abstract = True
