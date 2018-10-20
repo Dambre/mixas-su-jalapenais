@@ -2,6 +2,7 @@ import uuid
 
 from django.db import models
 from django.contrib.auth.models import User as AuthUser
+from annoying.fields import AutoOneToOneField
 
 
 class BaseModel(models.Model):
@@ -14,5 +15,5 @@ class BaseModel(models.Model):
 
 
 class User(BaseModel):
-    user = models.OneToOneField(AuthUser, on_delete=models.CASCADE)
+    user = AutoOneToOneField(AuthUser, on_delete=models.CASCADE)
     email = models.EmailField(null=True, blank=True)
