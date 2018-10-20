@@ -7,6 +7,7 @@ from .serializers import UserSerializer
 
 
 def list_users(request):
+    # optional
     users = []
     for user in User.objects.all():
         users.append(user.as_dict())

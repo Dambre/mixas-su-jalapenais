@@ -1,4 +1,5 @@
 from django.contrib import admin
-from missions.views import Mission
+from . import models
 
-admin.site.register(Mission)
+admin.site.register(models.Mission)
+admin.site.register(models.Bid)
