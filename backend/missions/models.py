@@ -21,7 +21,7 @@ class Mission(BaseModel):
         }
 
 
-class Bids(BaseModel):
+class Bid(BaseModel):
     worker = models.ForeignKey(User, on_delete=models.CASCADE)
     mission = models.ForeignKey(Mission, on_delete=models.CASCADE)
     amount = models.PositiveIntegerField(default=0)

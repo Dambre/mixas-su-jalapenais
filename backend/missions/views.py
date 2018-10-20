@@ -3,9 +3,7 @@ from django.http import JsonResponse
 from django.core import serializers
 from django.forms.models import model_to_dict
 
-from missions.models import Mission
-
-
+from .models import Mission, Bid 
 
 
 def all_missions(request):
@@ -25,3 +23,10 @@ def mission_by_id(request,id):
     _mission = _mission.as_dict()
 
     return JsonResponse(_mission, safe=False)
+
+
+def bids(request):
+    bids = []
+    for bid in Bid.objects.all():
+        bids.append(bid.as_dict())
+    return JsonResponse(bids, safe=False)
