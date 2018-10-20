@@ -7,4 +7,4 @@ from users.models import BaseModel, User
 class Mission(BaseModel):
     title = models.CharField(max_length=50)
     description = models.TextField(max_length=500)
-    creator = models.ForeignKey(User)
+    creator = models.ForeignKey(User, on_delete=models.CASCADE)
